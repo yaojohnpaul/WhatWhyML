@@ -9,6 +9,7 @@ using System.Xml;
 using IE.Models;
 using weka.classifiers;
 using weka.core;
+using WhatWhyML;
 
 namespace IE
 {
@@ -20,11 +21,11 @@ namespace IE
         [STAThread]
         public static void Main()
         {
-#if DEBUG
+/*#if DEBUG
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Main());
-#else
+#else*/
             Boolean isAnnotated = true;
             FileParser fileparserFP = new FileParser();
             String sourcePath = @"..\..\training_news.xml";
@@ -50,13 +51,12 @@ namespace IE
             List<String> listAllWhatAnnotations = new List<String>();
             List<String> listAllWhyAnnotations = new List<String>();
 
+            Preprocessor preprocessor = new Preprocessor();
 
             if (listCurrentArticles != null && listCurrentArticles.Count > 0 &&
                 (!isAnnotated || (listCurrentTrainingAnnotations != null && listCurrentTrainingAnnotations.Count > 0 &&
                 listCurrentArticles.Count == listCurrentTrainingAnnotations.Count)))
             {
-                Preprocessor preprocessor = new Preprocessor();
-
                 //Temporarily set to 2 because getting all articles takes longer run time
                 for (int nI = 0; nI < listCurrentArticles.Count; nI++)
                 {
@@ -79,13 +79,14 @@ namespace IE
 
                 if (isAnnotated)
                 {
-                    Trainer trainer = new Trainer();
+                    /*Trainer trainer = new Trainer();
                     trainer.trainMany("who", listTokenizedArticles, listAllWhoCandidates);
                     trainer.trainMany("when", listTokenizedArticles, listAllWhenCandidates);
-                    trainer.trainMany("where", listTokenizedArticles, listAllWhereCandidates);
+                    trainer.trainMany("where", listTokenizedArticles, listAllWhereCandidates);*/
                 }
             }
 
+            #region Candidate Selection Printer
             /*Candidate Selection Printer*/
             /*try
             {
@@ -138,8 +139,11 @@ namespace IE
             {
                 System.Console.WriteLine("Error with writing initial line of training dataset.");
             }*/
+            #endregion
 
-            Identifier annotationIdentifier = new Identifier();
+            WhatWhyTrainer wwt = new WhatWhyTrainer();
+            wwt.startTrain();
+            Identifier annotationIdentifier = new Identifier(isAnnotated, wwt);
             for (int nI = 0; nI < listCurrentArticles.Count; nI++)
             {
                 annotationIdentifier.setCurrentArticle(listTokenizedArticles[nI]);
@@ -149,6 +153,10 @@ namespace IE
                 annotationIdentifier.setWhatCandidates(listAllWhatCandidates[nI]);
                 annotationIdentifier.setWhyCandidates(listAllWhyCandidates[nI]);
                 annotationIdentifier.setTitle(listCurrentArticles[nI].Title);
+                if (isAnnotated)
+                {
+                    annotationIdentifier.setCurrentAnnotation(listCurrentTrainingAnnotations[nI]);
+                }
                 annotationIdentifier.labelAnnotations();
                 listAllWhoAnnotations.Add(annotationIdentifier.getWho());
                 listAllWhenAnnotations.Add(annotationIdentifier.getWhen());
@@ -156,12 +164,13 @@ namespace IE
                 listAllWhatAnnotations.Add(annotationIdentifier.getWhat());
                 listAllWhyAnnotations.Add(annotationIdentifier.getWhy());
             }
+            wwt.endTrain();
 
-            ResultWriter rw = new ResultWriter(destinationPath, formatDateDestinationPath, invertedDestinationPath, listCurrentArticles, listAllWhoAnnotations, listAllWhenAnnotations, listAllWhereAnnotations, listAllWhatAnnotations, listAllWhyAnnotations);
+            /*ResultWriter rw = new ResultWriter(destinationPath, formatDateDestinationPath, invertedDestinationPath, listCurrentArticles, listAllWhoAnnotations, listAllWhenAnnotations, listAllWhereAnnotations, listAllWhatAnnotations, listAllWhyAnnotations);
             rw.generateOutput();
             rw.generateOutputFormatDate();
-            rw.generateInvertedIndexOutput();
-#endif
+            rw.generateInvertedIndexOutput();*/
+//#endif
         }
     }
 }

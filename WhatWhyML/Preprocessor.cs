@@ -157,7 +157,13 @@ namespace IE
         #region Article Preprocessing Functions
         private void performTokenizationAndSS()
         {
-            var sentences = MaxentTagger.tokenizeText(new java.io.StringReader(articleCurrent.Body)).toArray();
+            listLatestTokenizedArticle = performTokenizationAndSS(articleCurrent.Body);
+        }
+
+        public List<Token> performTokenizationAndSS(String toBeTokenized)
+        {
+            List<Token> tokenizedString = new List<Token>();
+            var sentences = MaxentTagger.tokenizeText(new java.io.StringReader(toBeTokenized)).toArray();
             int sentenceCounter = 1;
             int positionCounter = 1;
             String[] abbreviationList = new String[] {
@@ -218,7 +224,7 @@ namespace IE
                 {
                     var newToken = new Token(word.ToString(), positionCounter);
                     newToken.Sentence = sentenceCounter;
-                    listLatestTokenizedArticle.Add(newToken);
+                    tokenizedString.Add(newToken);
                     positionCounter++;
                     if(!newToken.Value.Equals("."))
                         wordFinal = word.ToString();
@@ -232,6 +238,7 @@ namespace IE
                 if (flag)
                     sentenceCounter++;
             }
+            return tokenizedString;
         }
 
         private void performNER()
@@ -333,12 +340,12 @@ namespace IE
             if (annotationType == "WHAT")
             {
                 strAnnotation = String.Copy(annotationCurrent.What);
-                System.Console.WriteLine("WHAT Annotation: " + strAnnotation);
+                //System.Console.WriteLine("WHAT Annotation: " + strAnnotation);
             }
             else if (annotationType == "WHY")
             {
                 strAnnotation = String.Copy(annotationCurrent.Why);
-                System.Console.WriteLine("WHY Annotation: " + strAnnotation);
+                //System.Console.WriteLine("WHY Annotation: " + strAnnotation);
             }
             if (annotationType != "WHAT" && annotationType != "WHY" || strAnnotation.Count() <= 0 || strAnnotation == "N/A")
             {
@@ -362,7 +369,7 @@ namespace IE
                     statistics[2] = 1;
                     foreach (var candidate in listWhatCandidates)
                     {
-                        System.Console.WriteLine("WHAT CANDIDATES: " + string.Join(" ", candidate.Select(x => x.Value).ToArray()));
+                        //System.Console.WriteLine("WHAT CANDIDATES: " + string.Join(" ", candidate.Select(x => x.Value).ToArray()));
                         var tempCandidate = string.Join("", candidate.Select(x => x.Value).ToArray());
                         tempCandidate = tempCandidate.Replace("-LRB-", "(");
                         tempCandidate = tempCandidate.Replace("-RRB-", ")");
@@ -381,7 +388,7 @@ namespace IE
                         {
                             totalMatch = true;
                             statistics[3] = candidate.ElementAt(0).Sentence;
-                            System.Console.WriteLine("'WHAT' Under-extracted: " + tempCandidate + " - " + strAnnotation);
+                            //System.Console.WriteLine("'WHAT' Under-extracted: " + tempCandidate + " - " + strAnnotation);
                         }
                         else if (tempCandidate.Contains(strAnnotation))
                         {
@@ -396,7 +403,7 @@ namespace IE
                     }
                     if (statistics[3] < 0)
                     {
-                        System.Console.WriteLine("NO MATCH: " + original);
+                        //System.Console.WriteLine("NO MATCH: " + original);
                     }
                     statistics[0] = totalMatch ? 1 : 0;
                     statistics[1] = statistics[0] / listWhatCandidates.Count;
@@ -409,7 +416,7 @@ namespace IE
                     statistics[2] = 1;
                     foreach (var candidate in listWhyCandidates)
                     {
-                        System.Console.WriteLine("WHY CANDIDATES: " + string.Join(" ", candidate.Select(x => x.Value).ToArray()));
+                        //System.Console.WriteLine("WHY CANDIDATES: " + string.Join(" ", candidate.Select(x => x.Value).ToArray()));
                         var tempCandidate = string.Join("", candidate.Select(x => x.Value).ToArray());
                         tempCandidate = tempCandidate.Replace("-LRB-", "(");
                         tempCandidate = tempCandidate.Replace("-RRB-", ")");
@@ -428,7 +435,7 @@ namespace IE
                         {
                             totalMatch = true;
                             statistics[3] = candidate.ElementAt(0).Sentence;
-                            System.Console.WriteLine("'WHY' Under-extracted: " + tempCandidate + " - " + strAnnotation);
+                            //System.Console.WriteLine("'WHY' Under-extracted: " + tempCandidate + " - " + strAnnotation);
                         }
                         else if (tempCandidate.Contains(strAnnotation))
                         {
@@ -443,7 +450,7 @@ namespace IE
                     }
                     if(statistics[3] < 0)
                     {
-                        System.Console.WriteLine("NO MATCH: " + original);
+                        //System.Console.WriteLine("NO MATCH: " + original);
                     }
                     statistics[0] = totalMatch ? 1 : 0;
                     statistics[1] = statistics[0] / listWhyCandidates.Count;
@@ -473,7 +480,7 @@ namespace IE
                     strAnnotation = annotationCurrent.Who;
                     if (strAnnotation != null)
                     {
-                        System.Console.WriteLine("WHO Annotation: " + strAnnotation);
+                        //System.Console.WriteLine("WHO Annotation: " + strAnnotation);
                         assignmentMethod = annotation =>
                         {
                             foreach (var candidate in listWhoCandidates)
@@ -508,7 +515,7 @@ namespace IE
                     strAnnotation = annotationCurrent.When;
                     if (strAnnotation != null)
                     {
-                        System.Console.WriteLine("WHEN Annotation: " + strAnnotation);
+                        //System.Console.WriteLine("WHEN Annotation: " + strAnnotation);
                         assignmentMethod = annotation =>
                         {
                             foreach (var candidate in listWhenCandidates)
@@ -542,7 +549,7 @@ namespace IE
                     strAnnotation = annotationCurrent.Where;
                     if (strAnnotation != null)
                     {
-                        System.Console.WriteLine("WHERE Annotation: " + strAnnotation);
+                        //System.Console.WriteLine("WHERE Annotation: " + strAnnotation);
                         assignmentMethod = annotation =>
                         {
                             foreach (var candidate in listWhereCandidates)
@@ -650,7 +657,7 @@ namespace IE
                 }
             }
 
-            System.Console.WriteLine("Annotations Count: {0}", arrAnnotations.GetLength(0));
+            //System.Console.WriteLine("Annotations Count: {0}", arrAnnotations.GetLength(0));
             statistics[2] += 1;
             statistics[0] = (float)totalMatch / arrAnnotations.GetLength(0);
             switch (annotationType)

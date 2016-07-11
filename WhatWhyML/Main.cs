@@ -448,31 +448,31 @@ namespace IE
                     System.Console.WriteLine("Precision Why: " + statistics[4][1]);*/
                 }
 
-                System.Console.WriteLine("Average Statistics");
-                System.Console.WriteLine("Recall Who: " + recallWho / totalWho);
-                System.Console.WriteLine("Recall When: " + recallWhen / totalWhen);
-                System.Console.WriteLine("Recall Where: " + recallWhere / totalWhere);
-                System.Console.WriteLine("Recall What: " + recallWhat / totalWhat);
-                System.Console.WriteLine("Recall Why: " + recallWhy / totalWhy);
-                System.Console.WriteLine("Precision Who: " + precisionWho / totalWho);
-                System.Console.WriteLine("Precision When: " + precisionWhen / totalWhere);
-                System.Console.WriteLine("Precision Where: " + precisionWhere / totalWhen);
-                System.Console.WriteLine("Precision What: " + precisionWhat / totalWhat);
-                System.Console.WriteLine("Precision Why: " + precisionWhy / totalWhy);
-                System.Console.WriteLine("What sentence location :");
-                System.Console.WriteLine("Sentence 0: " + sentenceZeroWhat + " Percentage: " + sentenceZeroWhat/ totalWhat);
-                System.Console.WriteLine("Sentence 1: " + sentenceOneWhat + " Percentage: " + sentenceOneWhat / totalWhat);
-                System.Console.WriteLine("Sentence 2: " + sentenceTwoWhat + " Percentage: " + sentenceTwoWhat / totalWhat);
-                System.Console.WriteLine("Sentence 3: " + sentenceThreeWhat + " Percentage: " + sentenceThreeWhat / totalWhat);
-                System.Console.WriteLine("Sentence 4: " + sentenceFourWhat + " Percentage: " + sentenceFourWhat / totalWhat);
-                System.Console.WriteLine("Sentence >= 5: " + sentenceFiveWhat + " Percentage: " + sentenceFiveWhat / totalWhat);
-                System.Console.WriteLine("Why sentence location :");
-                System.Console.WriteLine("Sentence 0: " + sentenceZeroWhy + " Percentage: " + sentenceZeroWhy / totalWhy);
-                System.Console.WriteLine("Sentence 1: " + sentenceOneWhy + " Percentage: " + sentenceOneWhy / totalWhy);
-                System.Console.WriteLine("Sentence 2: " + sentenceTwoWhy + " Percentage: " + sentenceTwoWhy / totalWhy);
-                System.Console.WriteLine("Sentence 3: " + sentenceThreeWhy + " Percentage: " + sentenceThreeWhy / totalWhy);
-                System.Console.WriteLine("Sentence 4: " + sentenceFourWhy + " Percentage: " + sentenceFourWhy / totalWhy);
-                System.Console.WriteLine("Sentence >= 5: " + sentenceFiveWhy + " Percentage: " + sentenceFiveWhy / totalWhy);
+                //System.Console.WriteLine("Average Statistics");
+                //System.Console.WriteLine("Recall Who: " + recallWho / totalWho);
+                //System.Console.WriteLine("Recall When: " + recallWhen / totalWhen);
+                //System.Console.WriteLine("Recall Where: " + recallWhere / totalWhere);
+                //System.Console.WriteLine("Recall What: " + recallWhat / totalWhat);
+                //System.Console.WriteLine("Recall Why: " + recallWhy / totalWhy);
+                //System.Console.WriteLine("Precision Who: " + precisionWho / totalWho);
+                //System.Console.WriteLine("Precision When: " + precisionWhen / totalWhere);
+                //System.Console.WriteLine("Precision Where: " + precisionWhere / totalWhen);
+                //System.Console.WriteLine("Precision What: " + precisionWhat / totalWhat);
+                //System.Console.WriteLine("Precision Why: " + precisionWhy / totalWhy);
+                //System.Console.WriteLine("What sentence location :");
+                //System.Console.WriteLine("Sentence 0: " + sentenceZeroWhat + " Percentage: " + sentenceZeroWhat/ totalWhat);
+                //System.Console.WriteLine("Sentence 1: " + sentenceOneWhat + " Percentage: " + sentenceOneWhat / totalWhat);
+                //System.Console.WriteLine("Sentence 2: " + sentenceTwoWhat + " Percentage: " + sentenceTwoWhat / totalWhat);
+                //System.Console.WriteLine("Sentence 3: " + sentenceThreeWhat + " Percentage: " + sentenceThreeWhat / totalWhat);
+                //System.Console.WriteLine("Sentence 4: " + sentenceFourWhat + " Percentage: " + sentenceFourWhat / totalWhat);
+                //System.Console.WriteLine("Sentence >= 5: " + sentenceFiveWhat + " Percentage: " + sentenceFiveWhat / totalWhat);
+                //System.Console.WriteLine("Why sentence location :");
+                //System.Console.WriteLine("Sentence 0: " + sentenceZeroWhy + " Percentage: " + sentenceZeroWhy / totalWhy);
+                //System.Console.WriteLine("Sentence 1: " + sentenceOneWhy + " Percentage: " + sentenceOneWhy / totalWhy);
+                //System.Console.WriteLine("Sentence 2: " + sentenceTwoWhy + " Percentage: " + sentenceTwoWhy / totalWhy);
+                //System.Console.WriteLine("Sentence 3: " + sentenceThreeWhy + " Percentage: " + sentenceThreeWhy / totalWhy);
+                //System.Console.WriteLine("Sentence 4: " + sentenceFourWhy + " Percentage: " + sentenceFourWhy / totalWhy);
+                //System.Console.WriteLine("Sentence >= 5: " + sentenceFiveWhy + " Percentage: " + sentenceFiveWhy / totalWhy);
             }
             else
             {
@@ -480,7 +480,7 @@ namespace IE
                 return false;
             }
 
-            Identifier annotationIdentifier = new Identifier();
+            Identifier annotationIdentifier = new Identifier(false, null);
             for (int nI = 0; nI < listCurrentArticles.Count; nI++)
             {
                 annotationIdentifier.setCurrentArticle(listTokenizedArticles[nI]);

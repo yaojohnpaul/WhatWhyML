@@ -315,26 +315,7 @@ namespace IE
                 new String[] { " kaya ", "END" }
             };
 
-            string[] endMarkers = new string[]
-            {
-                " makaraang ",
-                ", ",
-            };
-
-            String[] verbMarkers = new String[]
-            {
-                "pag-usapan",
-                "sinabi",
-                "pinalalayo",
-                "itatatag",
-                "sinisi",
-                "nakipag-ugnayan",
-                "nagsampa",
-                "hiniling"
-            };
-
             List<double> candidateWeights = new List<double>();
-            double highestWeight = 0.5;
 
             if (listWhyCandidates.Count > 0)
             {
@@ -368,16 +349,6 @@ namespace IE
                             tempWhy.Substring(tempWhy.IndexOf(match[0]) + match[0].Count()) :
                             tempWhy.Substring(0, tempWhy.IndexOf(match[0]));
                         tempWeight += WEIGHT_PER_MARKER;
-
-                        if (match[1].Equals("START"))
-                        {
-                            string endMatch = endMarkers.FirstOrDefault(s => tempWhy.Contains(s));
-
-                            if (endMatch != null)
-                            {
-                                tempWhy = tempWhy.Substring(0, tempWhy.IndexOf(endMatch));
-                            }
-                        }
                     }
 
                     tempWeight += CARRY_OVER;

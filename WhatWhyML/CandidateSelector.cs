@@ -114,7 +114,7 @@ namespace IE
                 candidate.Value = candidate.Value.Replace("``", "\"");
                 candidate.Value = candidate.Value.Replace(" ''", "\"");
                 candidate.Value = candidate.Value.Replace("''", "\"");
-                System.Console.WriteLine("WHO CANDIDATE " + candidate.Value);
+                //System.Console.WriteLine("WHO CANDIDATE " + candidate.Value);
             }
 
             return candidates;
